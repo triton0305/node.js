@@ -1,0 +1,22 @@
+{
+  "dependencies": {
+    "underscore": "^1.13.2"
+  },
+  "name": "server_side_javascript",
+  "version": "1.0.0",
+  "description": "server side javascript tutorials",
+  "main": "1_hello.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/triton0305/node.js.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/triton0305/node.js/issues"
+  },
+  "homepage": "https://github.com/triton0305/node.js#readme"
+}
