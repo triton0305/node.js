@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "express": "^4.17.3",
+    "jade": "^1.11.0",
     "underscore": "^1.13.2"
   },
   "name": "server_side_javascript",

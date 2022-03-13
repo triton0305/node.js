@@ -2,9 +2,36 @@
 
 var express = require('express');
 var app = express();
-
+app.locals.pretty = true;
+app.set('view engine', 'jade');
+app.set('views', './views');
 app.use(express.static('public'));
 // 정적 파일, 수정하고 저장하면 node를 다시 실행하지 않아도 수정이 된다.
+app.get('/views', function(req, res){
+    res.render('temp', {time: Date(), title:'jade'} );
+}) 
+// template 에선 send 라 하지 않고 render 라고 한다.
+
+// app.get('/topic', function(req, res){
+//     res.send(req.query.name + ' : ' + req.query.score); 
+// })
+
+app.get('/topic/:id', function(req, res){
+    var topics = [
+        'JavaScript is ...',
+        'Nodejs is ...',
+        'Express is ...'
+    ];
+    var output = `
+    <a href="/topic?id=0">JavaScript</a><br>
+    <a href="/topic?id=1">Nodejs</a><br>
+    <a href="/topic?id=2">Express</a><br><br>
+    ${topics[req.params.id]}
+    `
+    res.send(output);
+})
+// query string
+
 
 app.get('/', function(req, res){
     res.send('hello home page');
