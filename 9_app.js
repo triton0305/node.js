@@ -1,80 +1,51 @@
-
-
 var express = require('express');
 var app = express();
-app.locals.pretty = true;
+
+var bodyParser = require('body-parser');
+
+app.use(bodyParser.urlencoded({ extended: false }));
+
 app.set('view engine', 'jade');
 app.set('views', './views');
-app.use(express.static('public'));
-// 정적 파일, 수정하고 저장하면 node를 다시 실행하지 않아도 수정이 된다.
-app.get('/views', function(req, res){
-    res.render('temp', {time: Date(), title:'jade'} );
-}) 
-// template 에선 send 라 하지 않고 render 라고 한다.
 
-// app.get('/topic', function(req, res){
-//     res.send(req.query.name + ' : ' + req.query.score); 
-// })
-
-app.get('/topic/:id', function(req, res){
-    var topics = [
-        'JavaScript is ...',
-        'Nodejs is ...',
-        'Express is ...'
-    ];
-    var output = `
-    <a href="/topic?id=0">JavaScript</a><br>
-    <a href="/topic?id=1">Nodejs</a><br>
-    <a href="/topic?id=2">Express</a><br><br>
-    ${topics[req.params.id]}
-    `
-    res.send(output);
-})
-// query string
-
+app.listen(1225, function(){
+    console.log('merry_christmas');
+});
 
 app.get('/', function(req, res){
-    res.send('hello home page');
-}) // 기본 페이지
+    res.send('Hello_Christmas');
+});
 
-app.get('/dynamic', function(req,res){
-    var lis = '';
-    for (var i=0; i<5; i++){
-        lis = lis + '<li>coding</li>';
-    }
-    var time = Date();
-    var output = `
-    <!DOCTYPE html>
-    <html>
-        <head>
-            <meta charset="utf-8">
-            <title></title>
-        </head>
-        <body>
-            Hello, Dynamic!
-            <ul>
-                ${lis}
-            </ul>
-            ${time}
-        </body>
-    </html>`;
+app.get('/topic/:id', function(req, res){
+    var topic = [
+        'javascript is ...',
+        'python is ...',
+        'C+ is ...'
+    ];
+
+    var output = `<br>
+    <a href="/topic/0">javascript</a><br>
+    <a href="/topic/1">python</a><br>
+    <a href="/topic/2">C+</a><br><br>
+    ${topic[req.params.id]}
+    `;
+
     res.send(output);
-})
-// 동적파일은 수정한 후 다시 node를 실행해야 한다.
-// 그러나 순수한 html 현재 시간을 표시하는 능력이나
-// 동적으로 표현할 수 있는 능력 X 
 
-app.get('/namsan', function(req, res){
-    res.send('Hi, namsan, <img src="/namsan_mountain.png">');
-})
+});
 
-app.get('/login', function(req, res){
-    res.send('<h2>Login please</h2>')
-})  // (get을 통해 routing 한다.) = (get 은 router) 
+app.get('/form', function(req, res){
+    res.render('form');
+});
 
-app.listen(3000, function(){
-    console.log('connected 3000 port');
-}); // port 할당
+app.get('/form_receiver', function(req, res){
+    var title = req.query.title;
+    var description = req.query.description;
+    res.send(title+':'+description);
+});
 
-// get, post, put, delete
-
+app.post('/form_receiver', function(req, res){
+    var title = req.body.title;
+    var description = req.body.description;
+    res.send(title+' : '+description);
+});
